@@ -3,8 +3,12 @@ package com.ikoyiclub.web.controller;
 import com.ikoyiclub.web.dto.ClubDto;
 import com.ikoyiclub.web.dto.EventDto;
 import com.ikoyiclub.web.models.Event;
+import com.ikoyiclub.web.models.UserEntity;
+import com.ikoyiclub.web.security.SecurityUtil;
 import com.ikoyiclub.web.service.ClubService;
 import com.ikoyiclub.web.service.EventService;
+import com.ikoyiclub.web.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,37 +25,39 @@ import java.util.List;
 public class EventController {
 
     private EventService eventService;
+    private UserService userService;
 
     @Autowired
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService, UserService userService) {
         this.eventService = eventService;
+        this.userService = userService;
     }
 
     @GetMapping("/events")
     public String eventList(Model model) {
-//        UserEntity user = new UserEntity();
+        UserEntity user = new UserEntity();
         List<EventDto> events = eventService.findAllEvents();
-//        String username = SecurityUtil.getSessionUser();
-//        if(username != null) {
-//            user = userService.findByUsername(username);
-//            model.addAttribute("user", user);
-//        }
-//        model.addAttribute("user", user);
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userService.findByUsername(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("user", user);
         model.addAttribute("events", events);
         return "events-list";
     }
 
     @GetMapping("/events/{eventId}")
     public String viewEvent(@PathVariable("eventId")Long eventId, Model model) {
-//        UserEntity user = new UserEntity();
+        UserEntity user = new UserEntity();
         EventDto eventDto = eventService.findByEventId(eventId);
-//        String username = SecurityUtil.getSessionUser();
-//        if(username != null) {
-//            user = userService.findByUsername(username);
-//            model.addAttribute("user", user);
-//        }
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userService.findByUsername(username);
+            model.addAttribute("user", user);
+        }
         model.addAttribute("club", eventDto.getClub());
-//        model.addAttribute("user", user);
+        model.addAttribute("user", user);
         model.addAttribute("event", eventDto);
         return "events-detail";
     }

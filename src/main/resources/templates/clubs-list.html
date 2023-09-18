@@ -15,8 +15,8 @@
                 You are registered successfully!
             </div>
             <div class="text-center mb-5">
-                <h1 class="fw-bolder">Find Running Clubs</h1>
-                <p class="lead fw-normal text-muted mb-0">Groups of passionate near you</p>
+                <h1 class="fw-bolder">Welcome to Ikoyi Club</h1>
+                <p class="lead fw-normal text-muted mb-0">Find Groups Of Passionate Clubs Near You</p>
             </div>
             
             <div class="row gx-5">
@@ -31,8 +31,10 @@
                         <br/>
                         <a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!">Project name</a>
                     </div>
-                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}">View</a>   
-                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>                
+                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}">View</a> 
+                    <div th:if="${user.id} == ${club.createdBy.id}">
+                    	<a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>  
+                    </div>              
                 </div> 
             </div>
         </div>
