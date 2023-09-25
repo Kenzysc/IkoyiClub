@@ -40,7 +40,7 @@
       </div>
       <div th:if="${param.logout}" class="alert alert-success">
         You have been logged out.</div>
-      <div class="login-form">
+      <div id="" class="login-form">
         <form method="post" th:action="@{/login}">
           <div class="form-group">
             <label>Username</label>
@@ -61,8 +61,8 @@
                     name="password">
           </div>
           <br/>
-         <!-- <button th:href="@{/register}" class="btn btn-primary btn-sm">Don't have an account? Register here.</button>-->
           <button type="submit" value="Log in" class="btn btn-primary">Login</button>
+          <button type="submit" value="Log in" class="btn btn-primary" id="guestLoginButton">Guest Login</button> 
         </form>
       </div>
     </div>
