@@ -17,16 +17,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ikoyiclub.web.dto.ClubDto;
 import com.ikoyiclub.web.models.UserEntity;
 import com.ikoyiclub.web.security.SecurityUtil;
+import com.ikoyiclub.web.service.ClubService;
 import com.ikoyiclub.web.service.UserService;
 import com.ikoyiclub.web.service.impl.ClubServiceImpl;
 
 @Controller
 public class ClubController {
-	private ClubServiceImpl clubService;
+	private ClubService clubService;
 	private UserService userService;
 
 	@Autowired
-	public ClubController(ClubServiceImpl clubService, UserService userService) {
+	public ClubController(ClubService clubService, UserService userService) {
 		this.clubService = clubService;
 		this.userService = userService;
 	}
@@ -74,8 +75,15 @@ public class ClubController {
 
     @GetMapping("/clubs/search")
     public String searchClub(@RequestParam(value = "query") String query, Model model) {
-        List<ClubDto> clubs = clubService.searchClubs(query);
+    	UserEntity user = new UserEntity();
+    	List<ClubDto> clubs = clubService.searchClubs(query);
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userService.findByUsername(username);
+            model.addAttribute("user", user);
+        }
         model.addAttribute("clubs", clubs);
+        model.addAttribute("user", user);
         return "clubs-list";
     }
 
@@ -95,6 +103,7 @@ public class ClubController {
         model.addAttribute("club", club);
         return "clubs-edit";
     }
+    
     @PostMapping("/clubs/{clubId}/edit")
     public String updateClub(@PathVariable("clubId") Long clubId,
                              @Valid @ModelAttribute("club") ClubDto club,
