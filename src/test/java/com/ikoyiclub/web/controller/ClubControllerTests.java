@@ -62,7 +62,7 @@ public class ClubControllerTests {
 	private String username;
 	private UserEntity user;
 	private SecurityContext securityContext;
-	Authentication authentication;
+	private Authentication authentication;
 	
 	
 	@BeforeEach
@@ -77,7 +77,7 @@ public class ClubControllerTests {
 				.content("awesome content").createdBy(user).build();
 		clubs = Arrays.asList(clubDto2);
 		
-		
+	
 		clubDto.setId(clubId);
 		clubDto.setCreatedBy(user);
 		

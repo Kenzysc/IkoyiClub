@@ -17,7 +17,7 @@
                     type="text"
                     class="form-control"
                     id="name"
-                    name="title"
+                    name="name"
                     th:field="*{name}"
                     placeholder="Event name">
             <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
@@ -28,7 +28,7 @@
                     type="text"
                     class="form-control"
                     id="type"
-                    name="photoUrl"
+                    name="type"
                     th:field="*{type}"
                     placeholder="Event type">
             <p th:if="${#fields.hasErrors('type')}" class="text-danger" th:errors="*{type}"></p>
