@@ -36,4 +36,6 @@ public class UserEntity {
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.PERSIST)
     private List<Club> clubs = new ArrayList<>();
     
+    @ManyToMany(mappedBy = "subscribers")
+    private List<Club> subscriptions = new ArrayList<>();    
 }
