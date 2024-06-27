@@ -1,5 +1,6 @@
 package com.ikoyiclub.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -32,6 +33,11 @@ public class ClubController {
 		this.userService = userService;
 	}
 	
+	@GetMapping("/")
+	public String home(Model model) {
+		return "redirect:/clubs";
+	}
+	
 	@GetMapping("/clubs")
     public String listClubs(Model model) {
         UserEntity user = new UserEntity();
@@ -48,15 +54,31 @@ public class ClubController {
 
     @GetMapping("/clubs/{clubId}")
     public String clubDetail(@PathVariable("clubId") long clubId, Model model) {
+    	String subStatus = null;
+    	
         UserEntity user = new UserEntity();
         ClubDto clubDto = clubService.findClubById(clubId);
         String username = SecurityUtil.getSessionUser();
+        
         if(username != null) {
             user = userService.findByUsername(username);
             model.addAttribute("user", user);
+            
+            
+            if(clubDto.getSubscribers().contains(user)) {
+            	subStatus = "Unsubscribe";
+            }
+            else {
+            	
+				subStatus = "Subscribe";
+			}
         }
+        
         model.addAttribute("user", user);
         model.addAttribute("club", clubDto);
+        model.addAttribute("substatus", subStatus);
+
+        
         return "clubs-detail";
     }
 
@@ -93,6 +115,16 @@ public class ClubController {
             model.addAttribute("club", clubDto);
             return "clubs-create";
         }
+        
+        UserEntity user = new UserEntity();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userService.findByUsername(username);
+        }
+        ArrayList<UserEntity> subArrayList = new ArrayList<>();
+        subArrayList.add(user);
+        clubDto.setSubscribers(subArrayList);
+        
         clubService.saveClub(clubDto);
         return "redirect:/clubs";
     }
@@ -115,6 +147,36 @@ public class ClubController {
         club.setId(clubId);
         clubService.updateClub(club);
         return "redirect:/clubs";
+    }
+    
+    @GetMapping("/clubs/{clubId}/subscription")
+    public String subscribe(@PathVariable("clubId") Long clubId) {
+    	
+    	 ClubDto clubDto = clubService.findClubById(clubId);
+    	 UserEntity user = new UserEntity();
+         String username = SecurityUtil.getSessionUser();
+         if(username != null) {
+             user = userService.findByUsername(username);
+         }
+           
+         // check subscription status and toggle it
+         List<UserEntity> clubSubscribers = clubDto.getSubscribers();
+         if (clubSubscribers.contains(user)) {
+        	 clubSubscribers.remove(user);
+        	 clubDto.setSubscribers(clubSubscribers);
+        	 clubDto.setId(clubId);
+        	 clubService.updateClub(clubDto);
+        	 
+         } else {
+        	 clubSubscribers.add(user);
+        	 clubDto.setSubscribers(clubSubscribers);
+        	 clubDto.setId(clubId);
+        	 clubService.updateClub(clubDto);
+        	 
+         }
+         
+    	return "redirect:/clubs/{clubId}";
+    	
     }
 	
 }

@@ -42,6 +42,7 @@
         You have been logged out.</div>
       <div id="" class="login-form">
         <form method="post" th:action="@{/login}">
+		  <br />
           <div class="form-group">
             <label>Username</label>
             <input
@@ -51,6 +52,7 @@
                     placeholder="Username"
                     name="username">
           </div>
+          <br />
           <div class="form-group">
             <label>Password</label>
             <input
@@ -60,7 +62,7 @@
                     placeholder="Password"
                     name="password">
           </div>
-          <br/>
+          <br />
           <button type="submit" value="Log in" class="btn btn-primary">Login</button>
           <button type="submit" value="Log in" class="btn btn-primary" id="guestLoginButton">Guest Login</button> 
         </form>

@@ -12,7 +12,7 @@
       <div class="container">
         <div class="text-center my-5">
           <h1 class="fw-bolder" th:text="${club.title}"></h1>
-          <p class="lead mb-0">Charlotte, NC</p>
+          <p class="lead mb-0" th:text="${club.content}">Lagos, NG</p>
         </div>
       </div>
     </header>
@@ -81,9 +81,13 @@
               <div class="row">
                 <div class="col-sm-6">
                   <ul class="list-unstyled mb-0">
-                    <li><a href="#!">Road Runner</a></li>
-                    <li><a href="#!">Trail</a></li>
-                    <li><a href="#!">Marathon</a></li>
+                    <li><a href="#!">indoor volley</a></li>
+                    <li><a href="#!">9-man</a></li>
+                    <li><a href="#!">beach volley</a></li>
+                    <li><a href="#!">table tennis</a></li>
+                    <li><a href="#!">lawn tennis</a></li>
+                    <li><a href="#!">5-aside soccer</a></li>
+                    <li><a href="#!">futsal</a></li>
                   </ul>
                 </div>
               </div>
@@ -91,8 +95,19 @@
           </div>
           <!-- Side widget-->
           <div class="card mb-4">
-            <div class="card-header">Side Widget</div>
-            <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+            <div class="card-header">Subscribers</div>
+            <div class="card-body">
+	          <a class="btn btn-primary" 
+	            id="subHandle"
+	          	th:href="@{/clubs/{clubId}/subscription(clubId=${club.id})}"
+	          	th:text="${substatus}">Subscribe
+	          </a>
+			
+			  <div th:each="subscriber :${club.subscribers}" class="col-lg-12 mb-2">
+	            <p th:text="${subscriber.username}"class="badge rounded-pill"></p>
+	          </div>
+	        </div>
+          </div>
           </div>
         </div>
       </div>

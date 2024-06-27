@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var guestNameInput = document.getElementById("username");
   var guestEmailInput = document.getElementById("password");
   var guestLoginButton = document.getElementById("guestLoginButton");
+  var subHandle = document.getElementById("subHandle");
 
 
   function fillGuestInfo() {
@@ -25,4 +26,18 @@ document.addEventListener("DOMContentLoaded", function() {
     fillGuestInfo(); 
     guestLoginForm.submit();
   });
+  
+  // This function toggles the subscription
+  function toggleSubStatus() {
+	if (subHandle.innerText === "Subscribe") {
+		subHandle.innerText === "Unsubscribe";
+	} else {
+		subHandle.innerText === "Subscribe";
+	}
+	
+	$.get("/clubs/subscription").done;
+  }
+  
+ // subHandle.addEventListener("click", toggleSubStatus);
+  
 });

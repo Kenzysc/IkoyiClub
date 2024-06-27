@@ -39,6 +39,7 @@
                     Username or email already exists</div>
                 <div class="login-form">
                     <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">
+                        <br />
                         <div class="form-group">
                             <label>Username</label>
                             <input
@@ -48,6 +49,7 @@
                                     th:field="*{username}">
                         </div>
                         <p th:if="${#fields.hasErrors('username')}" class="text-danger"></p>
+                        <br />
                         <div class="form-group">
                             <label>Email</label>
                             <input
@@ -57,6 +59,7 @@
                                     th:field="*{email}">
                         </div>
                         <p th:if="${#fields.hasErrors('email')}" class="text-danger"></p>
+                        <br />
                         <div class="form-group">
                             <label>Password</label>
                             <input
@@ -65,9 +68,12 @@
                                     placeholder="Password"
                                     th:field="*{password}">
                         </div>
+                        <br />
                         <p th:if="${#fields.hasErrors('password')}" class="text-danger"></p>
                         <!--<button th:href="@{/login}" type="submit" class="btn btn-primary">Login here.</button>-->
-                        <button th:href="@{/register}" type="submit" class="btn btn-secondary">Register</button>
+                        <div>
+                        		<button th:href="@{/register}" type="submit" class="btn btn-secondary">Register</button>
+                    		</div>
                     </form>
                 </div>
             </div>

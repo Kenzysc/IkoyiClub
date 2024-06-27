@@ -27,4 +27,5 @@ public class ClubDto {
     private LocalDateTime updatedOn;
     private UserEntity createdBy;
     private List<EventDto> events;
+    private List<UserEntity> subscribers;
 }
